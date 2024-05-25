@@ -1,0 +1,96 @@
+﻿@model IEnumerable<AppClienteMVCGMingenieros.Models.Comprobante>
+
+@{
+    ViewData["Title"] = "Lista de Comprobantes";
+}
+
+<h1>Comprobantes</h1>
+@if (TempData["mensaje"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["mensaje"]
+    </div>
+}
+
+
+<p>
+    <a asp-action="CreateComprobante">Registrar nuevo Comprobante</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Idcomprobante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Numerodocumento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ruc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Razonsocial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Concepto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Moneda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Importe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipodocumento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Emitidorecibido)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idcomprobante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numerodocumento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ruc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Razonsocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Concepto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Moneda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Importe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipodocumento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Emitidorecibido)
+            </td>
+            <td>
+                    @Html.ActionLink("Editar", "EditComprobantes", new { id = item.Idcomprobante }) |
+                @Html.ActionLink("Detalles", "Details", new { id=item.Idcomprobante   }) |
+                @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
