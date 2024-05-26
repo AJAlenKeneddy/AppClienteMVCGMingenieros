@@ -1,9 +1,17 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
 
-    <a href="@Url.Action("IndexComprobantes", "ComprobantesController")"></a>
+
+<div class="text-left">
+    <h1 class="text-primary">Bienvenido al sitio web de GM Ingenieros</h1>
+
+    <button class="btn btn-warning
+">
+        @Html.ActionLink("Ir al listado de Comprobantes", "IndexComprobantes", "Comprobantes", null, new { @class = "text-black" })
+
+    </button>
+
+    
 </div>

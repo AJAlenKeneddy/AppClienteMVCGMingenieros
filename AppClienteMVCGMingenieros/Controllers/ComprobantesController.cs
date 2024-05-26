@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using AppClienteMVCGMingenieros.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 namespace AppClienteMVCGMingenieros.Controllers
 {
-   
+
     public class ComprobantesController : Controller
     {
         private readonly DatadecomprasgmContext bd;
@@ -15,11 +16,26 @@ namespace AppClienteMVCGMingenieros.Controllers
         }
 
         // GET: ComprobantesController
-        public ActionResult IndexComprobantes()
+        public ActionResult IndexComprobantes(int nro_pag = 0)
         {
             var comprobantes = bd.Comprobantes.ToList();
-            return View(comprobantes);
+
+            int n = comprobantes.Count;
+
+
+            ViewBag.Cantidad = comprobantes.Count;
+            ViewBag.CONTADOR = n;
+            int cant_filas = 25;
+            int cant_paginas2 = (n % cant_filas == 0) ? n / cant_filas : n / cant_filas + 1;
+            var totalCompra = comprobantes.Skip(nro_pag * cant_filas).Take(cant_filas).Sum(c => c.Importe);
+            ViewBag.TotalPago = totalCompra;
+
+            ViewBag.CANT_PAGINAS = cant_paginas2;
+
+            return View(comprobantes.Skip(nro_pag * cant_filas).Take(cant_filas));
         }
+
+
 
 
         public ActionResult Details(int id)
@@ -27,7 +43,7 @@ namespace AppClienteMVCGMingenieros.Controllers
             var comprobante = bd.Comprobantes.FirstOrDefault(c => c.Idcomprobante == id);
             if (comprobante == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
             return View(comprobante);
         }
@@ -37,7 +53,7 @@ namespace AppClienteMVCGMingenieros.Controllers
         public ActionResult CreateComprobante()
         {
             Comprobante nuevo = new Comprobante();
-         
+
             return View(nuevo);
         }
 
@@ -48,7 +64,7 @@ namespace AppClienteMVCGMingenieros.Controllers
         {
             try
             {
-                
+
                 if (ModelState.IsValid)
                 {
                     bd.Comprobantes.Add(obj); // lo graba en la memoria
@@ -61,7 +77,7 @@ namespace AppClienteMVCGMingenieros.Controllers
             {
                 ViewBag.mensaje = ex.Message;
             }
-            
+
             return View();
         }
         public ActionResult EditComprobantes(int id)
@@ -85,7 +101,7 @@ namespace AppClienteMVCGMingenieros.Controllers
             }
 
             // Actualiza los campos del comprobante con los valores del comprobanteEditado
-            
+
             comprobante.Fecha = comprobanteEditado.Fecha;
             comprobante.Numerodocumento = comprobanteEditado.Numerodocumento;
             comprobante.Ruc = comprobanteEditado.Ruc;
@@ -103,34 +119,5 @@ namespace AppClienteMVCGMingenieros.Controllers
         }
 
 
-        // GET: ComprobantesController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ComprobantesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteComprobante(int id, IFormCollection collection)
-        {
-            try
-            {
-                Comprobante buscado = bd.Comprobantes.FirstOrDefault(x => x.Idcomprobante == id)!;
-              
-                //db.TbEmpleados.Remove(buscado);  // 
-                bd.SaveChanges();
-                //
-                TempData["mensaje"] = "Comprobante Eliminado correctamente";
-                //
-                return RedirectToAction(nameof(IndexComprobantes));
-            }
-            catch (Exception ex)
-            {
-                ViewBag.mensaje = ex.Message;
-            }
-            //
-            return View();
-        }
     }
 }

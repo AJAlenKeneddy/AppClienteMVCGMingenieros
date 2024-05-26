@@ -4,14 +4,17 @@
     ViewData["Title"] = "Lista de Comprobantes";
 }
 
-<h1>Comprobantes</h1>
+<h1 class="text-primary">Comprobantes</h1>
 @if (TempData["mensaje"] != null)
 {
     <div class="alert alert-success">
         @TempData["mensaje"]
+       
     </div>
 }
 
+<p>Cantidad de Comprobantes: @ViewBag.cantidad</p>
+<p>Suma de los Pagos: @Html.ViewBag.TotalPago</p>
 
 <p>
     <a asp-action="CreateComprobante">Registrar nuevo Comprobante</a>
@@ -87,10 +90,23 @@
             </td>
             <td>
                     @Html.ActionLink("Editar", "EditComprobantes", new { id = item.Idcomprobante }) |
-                @Html.ActionLink("Detalles", "Details", new { id=item.Idcomprobante   }) |
-                @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Detalles", "Details", new { id=item.Idcomprobante   }) 
+               
             </td>
         </tr>
 }
     </tbody>
 </table>
+<div>
+    @for (int i = 0; i < ViewBag.CANT_PAGINAS; i++)
+    {
+        @Html.ActionLink(
+                (i + 1).ToString(),
+                "IndexComprobantes",
+                new { nro_pag = i },
+                new { @class = "btn btn-primary" }
+                )
+        //@Html.Raw("&nbsp;")
+        @:&nbsp;
+    }
+</div>
