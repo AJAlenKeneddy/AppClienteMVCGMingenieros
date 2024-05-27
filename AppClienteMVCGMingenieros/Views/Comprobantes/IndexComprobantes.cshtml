@@ -13,32 +13,64 @@
     </div>
 }
 
-<p>Cantidad de Comprobantes: @ViewBag.cantidad</p>
-<p>Suma de los Pagos: @Html.ViewBag.TotalPago</p>
+<p style="--bs-link-opacity: .5">Cantidad de Comprobantes: @ViewBag.cantidad</p>
+<p style="--bs-link-opacity: .5">Suma de los Pagos: @Html.ViewBag.TotalPago</p>
+<hr class="border border-primary border-3 opacity-75">
+<p style="text-align: right;">
+    <button type="button" class="btn btn-outline-primary">
+        <a asp-action="CreateComprobante" class="text-black">Registrar nuevo Comprobante</a></button>
+        <button type="button" class="btn btn-outline-warning">
+    @Html.ActionLink("Regresar al Inicio", "Index", "Home", null, new { @class = "text-black" })</button
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Informacion
+</button>
 
-<p>
-    <a asp-action="CreateComprobante">Registrar nuevo Comprobante</a>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                En el apartado F/B significa factura o boleta respectivamnete
+                <br />
+                En el aprtado  E/R significa emitido o recibido respectivamente
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
 </p>
-<table class="table">
+
+
+
+<table class="table-info table table-bordered">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Idcomprobante)
+                ID
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Fecha)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Numerodocumento)
+                Documento
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Ruc)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Razonsocial)
+                Razon Social
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Concepto)
+                Descripcion
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Moneda)
@@ -47,12 +79,14 @@
                 @Html.DisplayNameFor(model => model.Importe)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tipodocumento)
+                F/B
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Emitidorecibido)
+                E/R
             </th>
-            <th></th>
+            <th>
+                Acciones
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -104,9 +138,10 @@
                 (i + 1).ToString(),
                 "IndexComprobantes",
                 new { nro_pag = i },
-                new { @class = "btn btn-primary" }
+                new { @class = "btn btn-outline-info" }
                 )
         //@Html.Raw("&nbsp;")
         @:&nbsp;
     }
 </div>
+
